@@ -50,7 +50,6 @@ def cli(input, names, prefix, xlab, ylab, title, colors):
     if colors and (len(names) != len(colors)):
         raise ValueError('Diff name and color number!')
     # draw
-    plt.figure(figsize=(16, 10), dpi=300)
     figure, ax = plt.subplots(figsize=(16, 8), dpi=300)
 
     for i in range(len(names)):

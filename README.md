@@ -14,3 +14,7 @@ python density.py -i density.data -n mRNA,lncRNA -p density -y Density -x "Media
 
 [数据路径](density/density.data)
 
+## Mix Plot
+多种类型图片的混合
+
+
