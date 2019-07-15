@@ -3,7 +3,7 @@
 # @Author: Ming
 # @Date:   2019-07-12 16:01:58
 # @Last Modified by:   Ming
-# @Last Modified time: 2019-07-15 19:18:55
+# @Last Modified time: 2019-07-15 21:39:03
 from collections import defaultdict
 
 import matplotlib as mpl
@@ -107,7 +107,7 @@ def cli(input, relation, xname, yname, huename, xorder, hueorder, huecolors,
     axis[1].set_xlim(axis[0].get_xlim())
     axis[1].axhline(0.5, lw=1, c='black', zorder=0)
     # 虚线的参数
-    style = dict(arrowstyle="Simple,head_width=4,head_length=8",
+    style = dict(arrowstyle="Simple,head_width=4,head_length=6",
                  linestyle='--', lw=2, color="r")
     for i in range(len(x_order)):
         gene = x_order[i]
@@ -121,8 +121,9 @@ def cli(input, relation, xname, yname, huename, xorder, hueorder, huecolors,
             for mRNA, pearson_val in relation_info[gene].items():
                 if abs(pearson_val) > pearson:
                     end = x_order.index(mRNA)
+                    rad = 0.2 if i < end else -0.2
                     arc_plot = patches.FancyArrowPatch((i, 0.4), (end, 0.4),
-                                                       connectionstyle="arc3,rad=.1",
+                                                       connectionstyle=f"arc3,rad={rad}",
                                                        **style)
                     axis[1].add_patch(arc_plot)
 

@@ -16,5 +16,16 @@ python density.py -i density.data -n mRNA,lncRNA -p density -y Density -x "Media
 
 ## Mix Plot
 多种类型图片的混合
+### box_rectangle
+![box_rectangle.svg](mix/box_rectangle.png)
+```python
+python box_rectangle.py -i box_rectangle.data -r box_rectangle.pearson --xname Gene --yname Exp --huename Group --xorder TCONS_00009919,TCONS_00009928,TCONS_00009929,TEA028107.1 -p box_rectangle
+```
+
+[脚本路径](mix/box_rectangle.py)
+
+[数据路径1](mix/box_rectangle.data)
+
+[数据路径2](mix/box_rectangle.pearson)
 
 
