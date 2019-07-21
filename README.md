@@ -2,6 +2,18 @@
 > 一些使用 Python 绘图的脚本
 
 ## Bar Plot
+![Bar Plot](bar/result.sample.png)
+
+```python
+python bar.py -i bar.data -g group.txt --xname Sample --yname Number -y Number
+```
+
+[脚本路径](bar/bar.py)
+
+[数据路径1](bar/bar.data)
+
+[数据路径2](bar/group.txt)
+
 
 ## Box Plot
 ![Box Plot](box/box.png)
