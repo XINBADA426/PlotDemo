@@ -26,6 +26,17 @@ python box.py -i box.data --xname Gene --yname Exp --huename Group --xrotation 9
 
 [数据路径](box/box.data)
 
+## Violin Plot
+![Violin Plot](violin/violin.png)
+
+```python
+-i violin.data --xname Sample --yname Exp -p violin
+```
+
+[脚本路径](violin/violin.py)
+
+[数据路径](violin/violin.data)
+
 ## Density Plot
 ![Density Plot](density/density.png)
 
