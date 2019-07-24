@@ -3,7 +3,7 @@
 # @Author: Ming
 # @Date:   2019-07-12 16:01:58
 # @Last Modified by:   Ming
-# @Last Modified time: 2019-07-23 18:16:24
+# @Last Modified time: 2019-07-24 10:56:58
 import matplotlib as mpl
 
 mpl.use('Agg')
@@ -35,6 +35,11 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('--hueorder',
               required=False,
               help="The order of hue names(sep by ,).")
+@click.option('--huesplit',
+              default=False,
+              type=bool,
+              show_default=True,
+              help="if the hue column hsa two tag, you can use it to put them in one violin")
 @click.option('--huecolors',
               required=False,
               help="The colors for hue infos(sep by ,).")
@@ -52,7 +57,8 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('-p', '--prefix',
               default='result',
               help="The out prefix.")
-def cli(input, xname, yname, huename, xorder, hueorder, huecolors, ylab, title,
+def cli(input, xname, yname, huename, xorder, hueorder, huesplit, huecolors,
+        ylab, title,
         xrotation, prefix):
     """
     Violin plot with python.
@@ -66,7 +72,8 @@ def cli(input, xname, yname, huename, xorder, hueorder, huecolors, ylab, title,
     # Draw
     figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
     sns.violinplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
-                   hue_order=hue_order, color=hue_color, ax=axis)
+                   hue_order=hue_order, split=huesplit, color=hue_color,
+                   ax=axis)
 
     axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
     axis.set(xlabel="", ylabel=ylab)
