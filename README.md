@@ -1,6 +1,18 @@
 # Plot Demos
 > 一些使用 Python 绘图的脚本
 
+## Scatter Plot
+![Scatter Plot](scatter/scatter.png)
+
+```python
+python scatter -i scatter.data --xname RNA_log2FC --yname Meth_diff -x Log2FC -y 'abs(meth.diff)' -p scatter
+```
+
+[脚本路径](scatter/scatter.py)
+
+[数据路径1](scatter/scatter.data)
+
+
 ## Bar Plot
 ![Bar Plot](bar/result.sample.png)
 
