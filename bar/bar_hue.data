@@ -1,0 +1,7 @@
+region	type	number
+up2k	hyper	10
+up2k	hypo	13
+genebody	hyper	11
+genebody	hypo	12
+down2k	hyper	122
+down2k	hypo	12

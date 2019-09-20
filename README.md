@@ -18,6 +18,9 @@ python scatter -i scatter.data --xname RNA_log2FC --yname Meth_diff -x Log2FC -y
 
 ```python
 python bar.py -i bar.data -g group.txt --xname Sample --yname Number -y Number
+
+# With Hue
+python bar.py -i bar_hue.data --xname region --yname number --huename 'type' --hueorder hyper,hypo --color red,green
 ```
 
 [脚本路径](bar/bar.py)

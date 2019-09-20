@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: Ming
 # @Date:   2019-07-20 19:49:02
-# @Last Modified by:   Ming
-# @Last Modified time: 2019-07-21 12:10:25
+# @Last Modified by:   MingJia
+# @Last Modified time: 2019-09-20 17:36:31
 import matplotlib as mpl
 
 mpl.use('Agg')
@@ -55,9 +55,19 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('--yname',
               required=True,
               help="The y column name for the plot")
+@click.option('--huename',
+              required=False,
+              default=True,
+              show_default=None,
+              help="The hue column name for the plot")
 @click.option('--xorder',
               required=False,
               help="The order of x axis names(sep by ,)")
+@click.option('--hueorder',
+              default=None,
+              required=False,
+              show_default=True,
+              help="The order of hue info(sep by ,)")
 @click.option('-y', '--ylab',
               required=False,
               help="The ylab for the plot")
@@ -69,11 +79,17 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               type=int,
               show_default=True,
               help="The x ticks lable rotation")
+@click.option('--color',
+              default=None,
+              required=False,
+              show_default=True,
+              help="The order of colors(sep by ,)")
 @click.option('-p', '--prefix',
               default='result',
               show_default=True,
               help="The out prefix")
-def cli(input, group, xname, yname, xorder, ylab, title, xrotation, prefix):
+def cli(input, group, xname, yname, huename, xorder, hueorder, ylab, title,
+        xrotation, color, prefix):
     """
     Bar plot with python.
     """
@@ -81,14 +97,17 @@ def cli(input, group, xname, yname, xorder, ylab, title, xrotation, prefix):
     x = df[xname]
     y = df[yname]
     x_order = xorder.strip().split(',') if xorder else None
+    hue_order = hueorder.strip().split(',') if hueorder else None
+    color_list = color.strip().split(',') if color else color
 
     # Sample Draw
     click.echo("Start to draw sample\n...")
     sample_number = len(x)
-    sample_color = random.choices(all_colors, k=sample_number)
+    sample_color = color_list if color_list else random.choices(
+        all_colors, k=sample_number)
     figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
-    sns.barplot(x=x, y=y, order=x_order, palette=sample_color,
-                ax=axis)
+    sns.barplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
+                hue_order=hue_order, palette=sample_color, ax=axis)
 
     axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
     axis.set(xlabel="", ylabel=ylab)
