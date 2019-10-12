@@ -63,6 +63,19 @@ python density.py -i density.data -n mRNA,lncRNA -p density -y Density -x "Media
 
 [数据路径](density/density.data)
 
+## Stack Plot
+![Stack Plot](stack/stack.stack.png)
+
+```python
+python stack.py -i stack.data -x Sample -y Percent -t "Stack Plot" -p stack
+```
+
+[脚本路径](stack/stack.py)
+
+[数据路径](stack/stack.data)
+
+
+
 ## Mix Plot
 多种类型图片的混合
 ### box_rectangle Plot
