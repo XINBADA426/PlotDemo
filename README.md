@@ -41,6 +41,17 @@ python box.py -i box.data --xname Gene --yname Exp --huename Group --xrotation 9
 
 [数据路径](box/box.data)
 
+## Pie Plot
+![Pie Plot](pie/pie.png)
+
+```python
+python pie.py -i pie.data --name Name --number Number --plot_type percent -t "Pie Plot" -p pie
+```
+
+[脚本路径](pie/pie.py)
+
+[数据路径](pie/pie.data)
+
 ## Violin Plot
 ![Violin Plot](violin/violin.png)
 
