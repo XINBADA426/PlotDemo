@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author: Ming
 # @Date:   2019-07-12 16:01:58
-# @Last Modified by:   Ming
-# @Last Modified time: 2019-07-16 00:07:28
+# @Last Modified by:   MingJia
+# @Last Modified time: 2019-10-16 10:54:17
 import matplotlib as mpl
 
 mpl.use('Agg')
@@ -49,11 +49,16 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               type=int,
               show_default=True,
               help="The x ticks lable rotation.")
+@click.option('--showfliers',
+              default=False,
+              type=click.BOOL,
+              show_default=True,
+              help="Whether show the fliers")
 @click.option('-p', '--prefix',
               default='result',
               help="The out prefix.")
 def cli(input, xname, yname, huename, xorder, hueorder, huecolors, ylab, title,
-        xrotation, prefix):
+        xrotation, showfliers, prefix):
     """
     Box plot with python.
     """
@@ -66,7 +71,8 @@ def cli(input, xname, yname, huename, xorder, hueorder, huecolors, ylab, title,
     # Draw
     figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
     sns.boxplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
-                hue_order=hue_order, color=hue_color, ax=axis)
+                showfliers=showfliers, hue_order=hue_order, color=hue_color,
+                width=0.6, ax=axis)
 
     axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
     axis.set(xlabel="", ylabel=ylab)
