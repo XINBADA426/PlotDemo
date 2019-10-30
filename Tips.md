@@ -19,3 +19,9 @@ axis.set_title(title, fontsize=25)
 # 从colormap `Spectral`中选择颜色
 c = [plt.cm.Spectral(i / float(len(data) - 1)) for i in range(len(data))]
 ```
+
+## 去除边框
+```python
+axis.spines['right'].set_color("none")
+axis.spines['top'].set_color("none")
+```
