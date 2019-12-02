@@ -115,7 +115,9 @@ def cli(input, group, xname, yname, huename, xorder, hueorder, xlab, ylab,
         sns.barplot(data=df, x=xname, y=yname, order=x_order,
                     palette=sample_color, ax=axis)
 
-    axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
+    for label in axis.get_xmajorticklabels():
+        label.set_rotation(xrotation)
+        label.set_horizontalalignment("right")
     axis.set(xlabel=xlab, ylabel=ylab)
     axis.set_title(title, fontdict={'size': 22})
 
