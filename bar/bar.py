@@ -56,9 +56,8 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               required=True,
               help="The y column name for the plot")
 @click.option('--huename',
-              required=False,
-              default=True,
-              show_default=None,
+              default=False,
+              show_default=True,
               help="The hue column name for the plot")
 @click.option('--xorder',
               required=False,
@@ -68,6 +67,9 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               required=False,
               show_default=True,
               help="The order of hue info(sep by ,)")
+@click.option('-x', '--xlab',
+              required=False,
+              help="The xlab for the plot")
 @click.option('-y', '--ylab',
               required=False,
               help="The ylab for the plot")
@@ -88,8 +90,8 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               default='result',
               show_default=True,
               help="The out prefix")
-def cli(input, group, xname, yname, huename, xorder, hueorder, ylab, title,
-        xrotation, color, prefix):
+def cli(input, group, xname, yname, huename, xorder, hueorder, xlab, ylab,
+        title, xrotation, color, prefix):
     """
     Bar plot with python.
     """
@@ -101,25 +103,29 @@ def cli(input, group, xname, yname, huename, xorder, hueorder, ylab, title,
     color_list = color.strip().split(',') if color else color
 
     # Sample Draw
-    click.echo("Start to draw sample\n...")
+    click.echo(click.style("Start to draw sample\n...", fg='green'))
     sample_number = len(x)
     sample_color = color_list if color_list else random.choices(
         all_colors, k=sample_number)
     figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
-    sns.barplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
-                hue_order=hue_order, palette=sample_color, ax=axis)
+    if huename:
+        sns.barplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
+                    hue_order=hue_order, palette=sample_color, ax=axis)
+    else:
+        sns.barplot(data=df, x=xname, y=yname, order=x_order,
+                    palette=sample_color, ax=axis)
 
     axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
-    axis.set(xlabel="", ylabel=ylab)
+    axis.set(xlabel=xlab, ylabel=ylab)
     axis.set_title(title, fontdict={'size': 22})
 
     plt.savefig(prefix + '.sample.svg', bbox_inches='tight')
     plt.savefig(prefix + '.sample.png', dpi=300, bbox_inches='tight')
-    click.echo("End draw sample")
+    click.echo(click.style("End draw sample", fg='green'))
 
     # Group Draw
     if group:
-        click.echo("\nStart to draw group\n...")
+        click.echo(click.style("\nStart to draw group\n...", fg='green'))
         group_info = parse_group(group)
         group_names = list(dict.fromkeys(group_info.values()))
         group_number = len(group_names)
@@ -143,7 +149,7 @@ def cli(input, group, xname, yname, huename, xorder, hueorder, ylab, title,
 
         plt.savefig(prefix + '.group.svg', bbox_inches='tight')
         plt.savefig(prefix + '.group.png', dpi=300, bbox_inches='tight')
-        click.echo("End draw group...")
+        click.echo(click.style("End draw group...", fg='green'))
 
 
 if __name__ == "__main__":
