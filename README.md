@@ -85,7 +85,20 @@ python stack.py -i stack.data -x Sample -y Percent -t "Stack Plot" -p stack
 
 [数据路径](stack/stack.data)
 
+## volcano plot
+![Volcano Plot](volcano/volcano.png)
 
+```python
+python volcano.py -i volcano.data -p volcano
+# 加入tag
+python volcano.py -i volcano.data --annot tag.txt -p volcano.tag
+```
+
+[脚本路径](volcano/volcano.py)
+
+[数据路径](volcano/volcano.data)
+
+[数据路径](volcano/tag.txt)
 
 ## Mix Plot
 多种类型图片的混合
