@@ -1,6 +1,16 @@
 # Plot Demos
 > 一些使用 Python 绘图的脚本
 
+## Line Plot
+![Line Plot](line/line.png)
+
+```python
+python line.py -i line.data -x Time -y Value --hue Deal --size 8,6 --order 5,4,3,2,1,0 --colors red,green -p line
+```
+
+[脚本路径](line/line.py)
+
+
 ## Scatter Plot
 ![Scatter Plot](scatter/scatter.png)
 
