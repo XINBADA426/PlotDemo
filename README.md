@@ -39,6 +39,16 @@ python bar.py -i bar_hue.data --xname region --yname number --huename 'type' --h
 
 [数据路径2](bar/group.txt)
 
+### Two Levle Bar plot
+![Two Level Plot](bar/two_level.png)
+
+```python
+python two_level.py -i two_level.data --xname Number --huename Group -p two_level
+```
+[脚本路径](bar/two_level.py)
+
+[数据路径1](bar/two_level.data)
+
 
 ## Box Plot
 ![Box Plot](box/box.png)

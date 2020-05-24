@@ -1,0 +1,81 @@
+KEGG_A_class	KEGG_B_class	Group	Number
+Metabolism	Nucleotide metabolism	JHT-1d	61
+Metabolism	Nucleotide metabolism	JHT-2d	64
+Metabolism	Nucleotide metabolism	JHT-3d	60
+Metabolism	Nucleotide metabolism	JHT-4d	69
+Metabolism	Nucleotide metabolism	JHT-12d	73
+Genetic Information Processing	Translation	JHT-1d	57
+Genetic Information Processing	Translation	JHT-2d	53
+Genetic Information Processing	Translation	JHT-3d	51
+Genetic Information Processing	Translation	JHT-4d	50
+Genetic Information Processing	Translation	JHT-12d	58
+Metabolism	Carbohydrate metabolism	JHT-1d	56
+Metabolism	Carbohydrate metabolism	JHT-2d	51
+Metabolism	Carbohydrate metabolism	JHT-3d	49
+Metabolism	Carbohydrate metabolism	JHT-4d	45
+Metabolism	Carbohydrate metabolism	JHT-12d	61
+Environmental Information Processing	Membrane transport	JHT-1d	56
+Environmental Information Processing	Membrane transport	JHT-2d	47
+Environmental Information Processing	Membrane transport	JHT-3d	46
+Environmental Information Processing	Membrane transport	JHT-4d	49
+Environmental Information Processing	Membrane transport	JHT-12d	72
+Metabolism	Energy metabolism	JHT-1d	16
+Metabolism	Energy metabolism	JHT-2d	15
+Metabolism	Energy metabolism	JHT-3d	14
+Metabolism	Energy metabolism	JHT-4d	14
+Metabolism	Energy metabolism	JHT-12d	17
+Genetic Information Processing	Folding, sorting and degradation	JHT-1d	82
+Genetic Information Processing	Folding, sorting and degradation	JHT-2d	79
+Genetic Information Processing	Folding, sorting and degradation	JHT-3d	75
+Genetic Information Processing	Folding, sorting and degradation	JHT-4d	79
+Genetic Information Processing	Folding, sorting and degradation	JHT-12d	96
+Metabolism	Lipid metabolism	JHT-1d	62
+Metabolism	Lipid metabolism	JHT-2d	57
+Metabolism	Lipid metabolism	JHT-3d	55
+Metabolism	Lipid metabolism	JHT-4d	53
+Metabolism	Lipid metabolism	JHT-12d	68
+Metabolism	Amino acid metabolism	JHT-1d	15
+Metabolism	Amino acid metabolism	JHT-2d	14
+Metabolism	Amino acid metabolism	JHT-3d	14
+Metabolism	Amino acid metabolism	JHT-4d	13
+Metabolism	Amino acid metabolism	JHT-12d	15
+Cellular Processes	Cellular community - prokaryotes	JHT-1d	13
+Cellular Processes	Cellular community - prokaryotes	JHT-2d	57
+Cellular Processes	Cellular community - prokaryotes	JHT-3d	37
+Cellular Processes	Cellular community - prokaryotes	JHT-4d	38
+Cellular Processes	Cellular community - prokaryotes	JHT-12d	39
+Environmental Information Processing	Signal transduction	JHT-1d	42
+Environmental Information Processing	Signal transduction	JHT-2d	42
+Environmental Information Processing	Signal transduction	JHT-3d	45
+Environmental Information Processing	Signal transduction	JHT-4d	46
+Environmental Information Processing	Signal transduction	JHT-12d	54
+Genetic Information Processing	Replication and repair	JHT-1d	68
+Genetic Information Processing	Replication and repair	JHT-2d	67
+Genetic Information Processing	Replication and repair	JHT-3d	64
+Genetic Information Processing	Replication and repair	JHT-4d	63
+Genetic Information Processing	Replication and repair	JHT-12d	64
+Metabolism	Metabolism of other amino acids	JHT-1d	15
+Metabolism	Metabolism of other amino acids	JHT-2d	11
+Metabolism	Metabolism of other amino acids	JHT-3d	10
+Metabolism	Metabolism of other amino acids	JHT-4d	11
+Metabolism	Metabolism of other amino acids	JHT-12d	20
+Genetic Information Processing	Transcription	JHT-1d	28
+Genetic Information Processing	Transcription	JHT-2d	20
+Genetic Information Processing	Transcription	JHT-3d	13
+Genetic Information Processing	Transcription	JHT-4d	16
+Genetic Information Processing	Transcription	JHT-12d	25
+Metabolism	Metabolism of cofactors and vitamins	JHT-1d	22
+Metabolism	Metabolism of cofactors and vitamins	JHT-2d	19
+Metabolism	Metabolism of cofactors and vitamins	JHT-3d	22
+Metabolism	Metabolism of cofactors and vitamins	JHT-4d	19
+Metabolism	Metabolism of cofactors and vitamins	JHT-12d	24
+Metabolism	Metabolism of terpenoids and polyketides	JHT-1d	4
+Metabolism	Metabolism of terpenoids and polyketides	JHT-2d	5
+Metabolism	Metabolism of terpenoids and polyketides	JHT-3d	5
+Metabolism	Metabolism of terpenoids and polyketides	JHT-4d	5
+Metabolism	Metabolism of terpenoids and polyketides	JHT-12d	6
+Human Diseases	Drug resistance	JHT-1d	23
+Human Diseases	Drug resistance	JHT-2d	14
+Human Diseases	Drug resistance	JHT-3d	14
+Human Diseases	Drug resistance	JHT-4d	16
+Human Diseases	Drug resistance	JHT-12d	27
