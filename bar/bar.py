@@ -90,14 +90,19 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               default='result',
               show_default=True,
               help="The out prefix")
+@click.option('-s', '--size',
+              default='16,8',
+              show_default=True,
+              help="The pic size")
 def cli(input, group, xname, yname, huename, xorder, hueorder, xlab, ylab,
-        title, xrotation, color, prefix):
+        title, xrotation, color, prefix, size):
     """
     Bar plot with python.
     """
     df = pd.read_csv(input, sep='\t')
     x = df[xname]
     y = df[yname]
+    pic_size = tuple([int(i) for i in size.strip().split(',')])
     x_order = xorder.strip().split(',') if xorder else None
     hue_order = hueorder.strip().split(',') if hueorder else None
     color_list = color.strip().split(',') if color else color
@@ -107,7 +112,7 @@ def cli(input, group, xname, yname, huename, xorder, hueorder, xlab, ylab,
     sample_number = len(x)
     sample_color = color_list if color_list else random.choices(
         all_colors, k=sample_number)
-    figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
+    figure, axis = plt.subplots(figsize=pic_size)
     if huename:
         sns.barplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
                     hue_order=hue_order, palette=sample_color, ax=axis)
@@ -137,7 +142,7 @@ def cli(input, group, xname, yname, huename, xorder, hueorder, xlab, ylab,
         for value in group_info.values():
             group_color.append(group_color_info[value])
 
-        figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
+        figure, axis = plt.subplots(figsize=pic_size)
         sns.barplot(x=x, y=y, order=x_order, palette=group_color, ax=axis)
 
         axis.set_xticklabels(axis.get_xticklabels(), rotation=xrotation)
