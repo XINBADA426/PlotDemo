@@ -57,9 +57,12 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('-p', '--prefix',
               default='result',
               help="The out prefix.")
+@click.option('-s', '--size',
+              default='16,8',
+              show_default=True,
+              help="The pic size")
 def cli(input, xname, yname, huename, xorder, hueorder, huesplit, huecolors,
-        ylab, title,
-        xrotation, prefix):
+        ylab, title, xrotation, prefix, size):
     """
     Violin plot with python.
     """
@@ -70,7 +73,8 @@ def cli(input, xname, yname, huename, xorder, hueorder, huesplit, huecolors,
     hue_color = huecolors.strip().split(',') if huecolors else None
 
     # Draw
-    figure, axis = plt.subplots(figsize=(16, 8), dpi=300)
+    pic_size = tuple([int(i) for i in size.strip().split(',')])
+    figure, axis = plt.subplots(figsize=pic_size)
     sns.violinplot(data=df, x=xname, y=yname, hue=huename, order=x_order,
                    hue_order=hue_order, split=huesplit, color=hue_color,
                    ax=axis)
