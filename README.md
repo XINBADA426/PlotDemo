@@ -49,6 +49,12 @@ python two_level.py -i two_level.data --xname Number --huename Group -p two_leve
 
 [数据路径1](bar/two_level.data)
 
+### Population Pyramid Plot
+![Population Pyramid Plot](bar/PopulationPyramidPlot.png)
+```python
+python /Bio/User/renchaobo/Scripts/PopulationPyramidPlot.py -i PopulationPyramidPlot.data -ic 0 -lc 1 -rc 2 -p PopulationPyramidPlot 
+```
+
 
 ## Box Plot
 ![Box Plot](box/box.png)
