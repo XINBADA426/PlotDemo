@@ -140,4 +140,15 @@ python box_rectangle.py -i box_rectangle.data -r box_rectangle.pearson --xname G
 
 [数据路径2](mix/box_rectangle.pearson)
 
+### buble plot
+![bubble.png](mix/bubble.png)
+```python
+python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
+```
+[脚本路径](mix/bubble.py)
+
+[数据路径1](mix/bubble_UP.tsv)
+
+[数据路径2](mix/bubble_DOWN.tsv)
+
 
