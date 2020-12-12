@@ -1,5 +1,5 @@
 # Plot Demos
-> 一些使用 Python 绘图的脚本
+> 一些绘图的脚本，今后不再局限于用那种语言了~
 
 ## Line Plot
 ![Line Plot](line/line.png)
@@ -48,6 +48,12 @@ python two_level.py -i two_level.data --xname Number --huename Group -p two_leve
 [脚本路径](bar/two_level.py)
 
 [数据路径1](bar/two_level.data)
+
+### Population Pyramid Plot
+![Population Pyramid Plot](bar/PopulationPyramidPlot.png)
+```python
+python /Bio/User/renchaobo/Scripts/PopulationPyramidPlot.py -i PopulationPyramidPlot.data -ic 0 -lc 1 -rc 2 -p PopulationPyramidPlot 
+```
 
 
 ## Box Plot
@@ -133,5 +139,22 @@ python box_rectangle.py -i box_rectangle.data -r box_rectangle.pearson --xname G
 [数据路径1](mix/box_rectangle.data)
 
 [数据路径2](mix/box_rectangle.pearson)
+
+### buble plot
+![bubble.png](mix/bubble.png)
+```python
+python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
+```
+[脚本路径](mix/bubble.py)
+
+[数据路径1](mix/bubble_UP.tsv)
+
+[数据路径2](mix/bubble_DOWN.tsv)
+
+### Heatmap
+![heatmap.png](heatmap/result.heatmap.png)
+```shell
+Rscript heatmap.r -f heatmap.data -c "blue,white,red" --scale --show_rowname --cluster_row
+```
 
 
