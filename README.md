@@ -1,5 +1,5 @@
 # Plot Demos
-> 一些使用 Python 绘图的脚本
+> 一些绘图的脚本，今后不再局限于用那种语言了~
 
 ## Line Plot
 ![Line Plot](line/line.png)
@@ -150,5 +150,11 @@ python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
 [数据路径1](mix/bubble_UP.tsv)
 
 [数据路径2](mix/bubble_DOWN.tsv)
+
+### Heatmap
+![heatmap.png](heatmap/result.heatmap.png)
+```shell
+Rscript heatmap.r -f heatmap.data -c "blue,white,red" --scale --show_rowname --cluster_row
+```
 
 
