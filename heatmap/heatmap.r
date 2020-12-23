@@ -28,6 +28,10 @@ option_list <- list(make_option(c("-f", "--file"),
                                 action = "store_true",
                                 default = FALSE,
                                 help = "Whether show the row names[default= %default]"),
+                    make_option(c("--hide_border"),
+                                action = "store_true",
+                                default = FALSE,
+                                help = "Whether hide the border[default= %default]"),
                     make_option(c("-g", "--group"),
                                 type = "character",
                                 default = NULL,
@@ -65,6 +69,13 @@ if (opts$scale) {
   scale <- "none"
 }
 
+if (opts$hide_border) {
+  border_color <- NA
+} else {
+  border_color <- "grey60"
+}
+
+
 gene_num <- nrow(clean_data)
 if (gene_num <= 200) {
   fontsize_row <- 4
@@ -92,6 +103,7 @@ if (is.null(opts$group)) {
            cluster_rows = opts$cluster_row,
            show_rownames = opts$show_rowname,
            fontsize_row = fontsize_row,
+           border_color = border_color,
            cellheight = cellheight)
 } else {
   loginfo("Parse the group info %s", opts$group)
@@ -111,6 +123,7 @@ if (is.null(opts$group)) {
            show_rownames = opts$show_rowname,
            fontsize_row = fontsize_row,
            cellheight = cellheight,
+           border_color = border_color,
            annotation_col = annotation_col)
 }
 loginfo("convert %s to %s", file_pdf, file_png)
