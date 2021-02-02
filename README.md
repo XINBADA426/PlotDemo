@@ -157,4 +157,9 @@ python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
 Rscript heatmap.r -f heatmap.data -c "blue,white,red" --scale --show_rowname --cluster_row
 ```
 
+### GSEA multi plot
+![GSEA multi plot](mix/gsea_multi_plot.png)
+```shell
+python gsea_multi_plot.py --edb gsea_multi_plot.edb --rnk gsea_multi_plot.rnk -t gsea_multi_plot.list
+```
 
