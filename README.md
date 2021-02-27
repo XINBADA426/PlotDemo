@@ -118,6 +118,8 @@ python stack.py -i stack.data -x Sample -y Percent -t "Stack Plot" -p stack
 python volcano.py -i volcano.data -p volcano
 # 加入tag
 python volcano.py -i volcano.data --annot tag.txt -p volcano.tag
+# R语言的方案
+/Bio/User/renchaobo/software/miniconda3/envs/R3.6.1/bin/Rscript tag_volcano.r -f volcano.data 
 ```
 
 [脚本路径](volcano/volcano.py)
