@@ -67,6 +67,11 @@ python box.py -i box.data --xname Gene --yname Exp --huename Group --xrotation 9
 
 [数据路径](box/box.data)
 
+![box_ggpubr](box/box_ggpubr.png)
+```R
+box_ggpubr.R -f box_ggpubr.data --compare box_ggpubr.compare -p box_ggpubr
+```
+
 ## Pie Plot
 ![Pie Plot](pie/pie.png)
 
