@@ -1,0 +1,23 @@
+# 树本体
+tree:
+  branch.length: ~
+  color: ~
+  size: 2
+  linetype: ~
+  layout: circular
+
+# 终端 node
+tippoint:
+  size: 1.5
+tiplab:
+  size: 1.5
+  hjust: -.3
+
+# node 的分组
+#cladelabel:
+#  size
+
+
+
+
+
