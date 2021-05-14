@@ -1,0 +1,28 @@
+# 树本体
+tree:
+  branch.length: none
+  size: 0.6
+  layout: circular
+
+# 终端文字
+tiplab:
+  size: 1.5
+  hjust: -.3
+
+# 终端点
+tippoint:
+  size: 0.8
+
+cladeline:
+  # 外围线圈宽度
+  size: 2
+  # 外围线圈偏移量
+  offset: 5
+
+
+
+
+
+
+
+

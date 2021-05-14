@@ -170,3 +170,8 @@ Rscript heatmap.r -f heatmap.data -c "blue,white,red" --scale --show_rowname --c
 python gsea_multi_plot.py --edb gsea_multi_plot.edb --rnk gsea_multi_plot.rnk -t gsea_multi_plot.list
 ```
 
+### tree
+![Tree plot](tree/PhyTree.png)
+```shell
+PhyTree.R
+```
