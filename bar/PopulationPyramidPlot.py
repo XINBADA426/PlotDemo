@@ -19,6 +19,19 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 __version__ = '1.0.0'
 
+
+def change_bar_width(ax, new_value):
+    for patch in ax.patches:
+        current_height = patch.get_height()
+        diff = current_height - new_value
+
+        # we change the bar heigth
+        patch.set_height(new_value)
+
+        # we recenter the bar
+        patch.set_y(patch.get_y() + diff * .5)
+
+
 ########################
 
 
@@ -32,28 +45,29 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
               type=click.Path(),
               help="The table input to plot population pyramid")
 @click.option('-ic', '--indexcolumn',
-              required=True,
               default=0,
               show_default=True,
               type=int,
               help="The index column number for the plot")
 @click.option('-lc', '--leftcolumn',
-              required=True,
               default=1,
               show_default=True,
               type=int,
               help="The left column number for the plot")
 @click.option('-rc', '--rightcolumn',
-              required=True,
               default=2,
               show_default=True,
               type=int,
               help="The right column number for the plot")
+@click.option('--color',
+              default="red,green",
+              show_default=True,
+              help="The left and right color for plot")
 @click.option('-p', '--prefix',
               default='result',
               show_default=True,
               help="The out prefix")
-def cli(input, indexcolumn, leftcolumn, rightcolumn, prefix):
+def cli(input, indexcolumn, leftcolumn, color, rightcolumn, prefix):
     """
     Populaation Pyramid Plot with python
     """
@@ -62,24 +76,32 @@ def cli(input, indexcolumn, leftcolumn, rightcolumn, prefix):
     index = df.iloc[:, indexcolumn]
     logging.info(f"Index column name {index.name}")
     left = df.iloc[:, leftcolumn]
+    max_l = max(left)
     logging.info(f"Index column name {left.name}")
     right = df.iloc[:, rightcolumn]
+    max_r = max(right)
     logging.info(f"Index column name {right.name}")
 
     logging.info("Start to draw...")
     new_df = pd.DataFrame({index.name: index,
                            left.name: -left,
                            right.name: right})
-    colors = [plt.cm.Spectral(i / 1) for i in range(2)]
+    colors = color.strip().split(',')
     plt.rc('ytick', labelsize=12)
-    figure, axis = plt.subplots(figsize=(10, 8), dpi=300)
-    sns.barplot(x=left.name, y=index.name, data=new_df,
-                color=colors[1], label=left.name,
+    figure, axis = plt.subplots(figsize=(10, 6), dpi=300)
+    sns.barplot(x=left.name,
+                y=index.name,
+                data=new_df,
+                color=colors[1],
+                label=left.name,
                 ax=axis)
-    sns.barplot(x=right.name, y=index.name, data=new_df,
-                color=colors[0], label=right.name,
+    sns.barplot(x=right.name,
+                y=index.name,
+                data=new_df,
+                color=colors[0],
+                label=right.name,
                 ax=axis)
-
+    change_bar_width(axis, .5)
     # add text
     categories = axis.get_yticks()
     for i in range(len(categories)):
@@ -87,12 +109,16 @@ def cli(input, indexcolumn, leftcolumn, rightcolumn, prefix):
         rx = right[i]
         axis.text(lx, i, f'{-lx}',
                   ha='right', va='center',
-                  size=10,
+                  size=8,
                   color='black')
         axis.text(rx, i, f'{rx}',
                   ha='left', va='center',
-                  size=10,
+                  size=8,
                   color='black')
+
+    # set x limit
+    max_value = max(max_l, max_r)
+    axis.set_xlim([-max_value, max_value])
 
     # hide tick line
     axis.tick_params(axis='y', length=0, pad=20)
@@ -113,8 +139,9 @@ def cli(input, indexcolumn, leftcolumn, rightcolumn, prefix):
     axis.spines['right'].set_color("none")
     axis.spines['top'].set_color("none")
 
-    plt.legend(bbox_to_anchor=(0.6, 1.05),
-               loc=4, ncol=2)
+    plt.legend(bbox_to_anchor=(1, 1),
+               frameon=False,
+               loc=2)
 
     plt.savefig(prefix + '.svg', bbox_inches='tight')
     plt.savefig(prefix + '.png', bbox_inches='tight')

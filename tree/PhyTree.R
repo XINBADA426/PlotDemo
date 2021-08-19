@@ -62,7 +62,8 @@ add_cladeline <- function(obj.ggplot,
         yend = y + 1,
         color = data[, color]
       )
-    )
+    ) +
+    scale_linetype_manual(values = 1, name=color,label="BESE PLOTS LOCATION")
   return(p)
 }
 
