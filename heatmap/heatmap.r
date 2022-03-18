@@ -9,13 +9,29 @@ library(pheatmap)
 library(logging)
 basicConfig()
 
+#### Functions
+parser_info <- function(fname, sep = "\t", header = False, ...) {
+  loginfo("Parse the info %s", fname)
+  res <- read.table(file = fname,
+                    sep = sep,
+                    row.names = 1,
+                    heaer = header,
+                    check.names = F,
+                    ...)
+  return(res)
+}
+
+plot_heatmap <- function() {
+  pass
+}
+
+#### Command Parser
 option_list <- list(make_option(c("-f", "--file"),
                                 type = "character",
                                 help = "The abundance table"),
                     make_option(c("--scale"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether scale the data[default= %default]"),
+                                default = "none",
+                                help = "Whether scale the data(none | column | row)[default= %default]"),
                     make_option(c("--cluster_row"),
                                 action = "store_true",
                                 default = FALSE,
@@ -32,10 +48,14 @@ option_list <- list(make_option(c("-f", "--file"),
                                 action = "store_true",
                                 default = FALSE,
                                 help = "Whether hide the border[default= %default]"),
-                    make_option(c("-g", "--group"),
+                    make_option(c("--group"),
                                 type = "character",
                                 default = NULL,
                                 help = "The group info file"),
+                    make_option(c("--feature"),
+                                type = "character",
+                                default = NULL,
+                                help = "The feature class file"),
                     make_option(c("-c", "--color"),
                                 type = "character",
                                 default = "steelblue,white,red",
@@ -53,6 +73,15 @@ opts <- parse_args(OptionParser(usage = "%prog[options]",
                                 description = "\nHeatmpap plot script"),
                    positional_arguments = F)
 
+#### Main
+color <- colorRampPalette(strsplit(opts$color, ',')[[1]])(256)
+if (opts$scale %in% c("none", "row", "column")) {
+  scale <- opts$scale
+} else {
+  stop(logerror("scale param must be none | row | column"))
+}
+border_color <- ifelse(opts$hide_border, NA, "grey60")
+
 loginfo("Parse the input table %s", opts$file)
 data <- read.table(file = opts$file,
                    header = T,
@@ -60,21 +89,9 @@ data <- read.table(file = opts$file,
                    check.names = F,
                    sep = "\t",
                    quote = "")
+
 loginfo("Remove the 0 rows")
 clean_data <- as.matrix(data[which(rowSums(data) > 0),])
-color <- colorRampPalette(strsplit(opts$color, ',')[[1]])(256)
-if (opts$scale) {
-  scale <- "row"
-}else {
-  scale <- "none"
-}
-
-if (opts$hide_border) {
-  border_color <- NA
-} else {
-  border_color <- "grey60"
-}
-
 
 gene_num <- nrow(clean_data)
 if (gene_num <= 200) {
@@ -90,9 +107,14 @@ if (gene_num <= 200) {
   cellheight <- 4000 / gene_num
 }
 
+info_group <- ifelse(is.null(opts$group), NA, parser_info(opts$group))
+
+info_feature <- ifelse(if.null(opts$feature), NA, parser_info(opts$feature))
+
 loginfo("Start to plot")
-file_pdf <- paste(opts$prefix, "heatmap.pdf", sep = ".")
-file_png <- paste(opts$prefix, "heatmap.png", sep = ".")
+f_pdf <- paste(opts$prefix, "heatmap.pdf", sep = ".")
+f_png <- paste(opts$prefix, "heatmap.png", sep = ".")
+
 if (is.null(opts$group)) {
   pheatmap(clean_data,
            filename = file_pdf,
