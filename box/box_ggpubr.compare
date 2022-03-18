@@ -1,0 +1,6 @@
+LA	SB
+LA	DS
+LA	DH
+SB	DS
+SB	DH
+DS	DH

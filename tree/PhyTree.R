@@ -1,5 +1,5 @@
-#!/Bio/User/renchaobo/software/miniconda3/envs/R4.0.3/bin/Rscript
-# Title     : PhyTree.R
+#!/usr/bin/Rscript
+# Title     : TreePlot.R
 # Objective : Phylogenetic Tree Plot
 # Created by: MingJia
 # Created on: 2021/5/10
@@ -29,7 +29,8 @@ plot_tree <- function(obj,
               layout = layout,
               size = tree.size) +
     geom_tiplab(hjust = tiplap.hjust,
-                size = tiplap.size)
+                size = tiplap.size) +
+    geom_treescale(0, 0)
   return(p)
 }
 
@@ -87,18 +88,20 @@ option_list <- list(
   make_option(c("--cladeline"),
               type = "character",
               help = "The column name to regard as cladeline color in annot file"),
-  make_option(
-    c("-p", "--prefix"),
-    type = "character",
-    default = "result",
-    help = "The out prefix[default= %default]"
-  ),
-  make_option(
-    c("--convert"),
-    type = "character",
-    default = "/Bio/usr/bin/convert",
-    help = "The convert program to convert pdf to png[default= %default]"
-  )
+  make_option(c("--layout"),
+              type = "character",
+              help = "The layout for the tree"),
+  make_option(c("--fontsize"),
+              type = "character",
+              help = "The text font size for species name"),
+  make_option(c("-p", "--prefix"),
+              type = "character",
+              default = "result",
+              help = "The out prefix[default= %default]"),
+  make_option(c("--convert"),
+              type = "character",
+              default = "/usr/bin/convert",
+              help = "The convert program to convert pdf to png[default= %default]")
 )
 opts <- parse_args(
   OptionParser(
@@ -120,6 +123,13 @@ if (is.null(opts$yaml)) {
 config <- yaml.load_file(opts$yaml)
 if (is.null(config$tree$brach.length)) {
   config$tree$brach.length <- "none"
+}
+if (!is.null(opts$layout)) {
+  config$tree$layout <- opts$layout
+}
+
+if (!is.null(opts$fontsize)) {
+  config$tiplab$size <- as.double(opts$fontsize)
 }
 
 loginfo("Load the tree file %s", opts$tree)
@@ -164,4 +174,4 @@ loginfo("Save the plot")
 file_pdf <- str_c(opts$prefix, "pdf", sep = '.')
 ggsave(file_pdf, p, limitsize = FALSE)
 file_png <- str_c(opts$prefix, "png", sep = '.')
-system(str_c("/Bio/usr/bin/convert", file_pdf, file_png, sep = " "))
+system(str_c(opts$convert, "-density 300 -colorspace RGB", file_pdf, file_png, sep = " "))
