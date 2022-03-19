@@ -160,8 +160,8 @@ python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
 
 ### Heatmap
 ![heatmap.png](heatmap/result.heatmap.png)
-```shell
-Rscript heatmap.r -f heatmap.data -c "blue,white,red" --scale --show_rowname --cluster_row
+```bash
+Rscript heatmap.r -f heatmap.data --cluster_row --cluster_col --group group.tsv --feature feature.tsv -c "#2F70AD,#FFFFFF,#BA2831"
 ```
 
 ### GSEA multi plot
