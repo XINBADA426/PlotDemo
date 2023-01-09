@@ -2,79 +2,167 @@
 # @Author: MingJia
 # @Date:   2020-12-12 09:32:25
 # @Last Modified by:   MingJia
-# @Last Modified time: 2020-12-12 20:23:52
-.libPaths("/home/renchaobo/R/x86_64-unknown-linux-gnu-library/3.2")
+# @Last Modified time: 2022-09-19 00:11:52
 library(optparse)
 library(pheatmap)
 library(logging)
-basicConfig()
+basicConfig(level = "INFO")
 
-option_list <- list(make_option(c("-f", "--file"),
-                                type = "character",
-                                help = "The abundance table"),
-                    make_option(c("--scale"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether scale the data[default= %default]"),
-                    make_option(c("--cluster_row"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether cluster rows[default= %default]"),
-                    make_option(c("--cluster_col"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether cluster cols[default= %default]"),
-                    make_option(c("--show_rowname"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether show the row names[default= %default]"),
-                    make_option(c("--hide_border"),
-                                action = "store_true",
-                                default = FALSE,
-                                help = "Whether hide the border[default= %default]"),
-                    make_option(c("-g", "--group"),
-                                type = "character",
-                                default = NULL,
-                                help = "The group info file"),
-                    make_option(c("-c", "--color"),
-                                type = "character",
-                                default = "steelblue,white,red",
-                                help = "The color to use[default= %default]"),
-                    make_option(c("-t", "--title"),
-                                type = "character",
-                                default = "",
-                                help = "The title for the heatmap"),
-                    make_option(c("-p", "--prefix"),
-                                type = "character",
-                                default = "./result",
-                                help = "The out put prefix[default= %default]"))
-opts <- parse_args(OptionParser(usage = "%prog[options]",
-                                option_list = option_list,
-                                description = "\nHeatmpap plot script"),
-                   positional_arguments = F)
+#### Functions
+parser_info <- function(fname,
+                        sep = "\t",
+                        header = FALSE,
+                        ...) {
+  loginfo("Parse the info %s", fname)
+  res <- read.table(
+    file = fname,
+    sep = sep,
+    row.names = 1,
+    header = header,
+    check.names = F,
+    stringsAsFactors = F,
+    ...
+  )
+  return(res)
+}
+
+plot_heatmap <- function(data,
+                         fout,
+                         title,
+                         color,
+                         scale,
+                         cluster_col,
+                         cluster_row,
+                         show_rowname,
+                         show_colname,
+                         fontsize_row,
+                         border_color,
+                         cellwidth,
+                         cellheight,
+                         ...) {
+  pheatmap(
+    data,
+    filename = fout,
+    main = title,
+    color = color,
+    scale = scale,
+    cluster_cols = cluster_col,
+    cluster_rows = cluster_row,
+    show_rownames = show_rowname,
+    show_colnames = show_colname,
+    fontsize_row = fontsize_row,
+    border_color = border_color,
+    cellwidth = cellwidth,
+    cellheight = cellheight,
+    ...
+  )
+}
+
+#### Command Parser
+option_list <- list(
+  make_option(c("-f", "--file"),
+              type = "character",
+              help = "The abundance table"),
+  make_option(c("--scale"),
+              default = "row",
+              help = "Whether scale the data(none | column | row)[default= %default]"),
+  make_option(
+    c("--cluster_row"),
+    action = "store_true",
+    default = FALSE,
+    help = "Whether cluster rows[default= %default]"
+  ),
+  make_option(
+    c("--cluster_col"),
+    action = "store_true",
+    default = FALSE,
+    help = "Whether cluster cols[default= %default]"
+  ),
+  make_option(
+    c("--show_rowname"),
+    action = "store_true",
+    default = FALSE,
+    help = "Whether show the row names[default= %default]"
+  ),
+    make_option(
+    c("--show_colname"),
+    action = "store_true",
+    default = FALSE,
+    help = "Whether show the column names[default= %default]"
+  ),
+  make_option(
+    c("--hide_border"),
+    action = "store_true",
+    default = FALSE,
+    help = "Whether hide the border[default= %default]"
+  ),
+  make_option(
+    c("--group"),
+    type = "character",
+    default = NULL,
+    help = "The group info file"
+  ),
+  make_option(
+    c("--feature"),
+    type = "character",
+    default = NULL,
+    help = "The feature class file"
+  ),
+  make_option(
+    c("-c", "--color"),
+    type = "character",
+    default = "steelblue,white,red",
+    help = "The color to use[default= %default]"
+  ),
+  make_option(c("--cwidth"),
+              type = "double",
+              help = "The cell width"),
+  make_option(c("--cheight"),
+              type = "double",
+              help = "The cell height"),
+  make_option(
+    c("-t", "--title"),
+    type = "character",
+    default = "",
+    help = "The title for the heatmap"
+  ),
+  make_option(
+    c("-p", "--prefix"),
+    type = "character",
+    default = "./result",
+    help = "The out put prefix[default= %default]"
+  )
+)
+opts <- parse_args(
+  OptionParser(
+    usage = "%prog[options]",
+    option_list = option_list,
+    description = "\nHeatmpap plot script"
+  ),
+  positional_arguments = F
+)
+
+#### Main
+color <- colorRampPalette(unlist(strsplit(opts$color,',')))(100)
+if (opts$scale %in% c("none", "row", "column")) {
+  scale <- opts$scale
+} else {
+  stop(logerror("scale param must be none | row | column"))
+}
+border_color <- ifelse(opts$hide_border, NA, "grey60")
 
 loginfo("Parse the input table %s", opts$file)
-data <- read.table(file = opts$file,
-                   header = T,
-                   row.names = 1,
-                   check.names = F,
-                   sep = "\t",
-                   quote = "")
+data <- read.table(
+  file = opts$file,
+  header = T,
+  row.names = 1,
+  check.names = F,
+  sep = "\t",
+  quote = ""
+)
+
 loginfo("Remove the 0 rows")
-clean_data <- as.matrix(data[which(rowSums(data) > 0),])
-color <- colorRampPalette(strsplit(opts$color, ',')[[1]])(256)
-if (opts$scale) {
-  scale <- "row"
-}else {
-  scale <- "none"
-}
-
-if (opts$hide_border) {
-  border_color <- NA
-} else {
-  border_color <- "grey60"
-}
-
+clean_data <- as.matrix(data[which(rowSums(data) > 0), ])
 
 gene_num <- nrow(clean_data)
 if (gene_num <= 200) {
@@ -90,42 +178,51 @@ if (gene_num <= 200) {
   cellheight <- 4000 / gene_num
 }
 
-loginfo("Start to plot")
-file_pdf <- paste(opts$prefix, "heatmap.pdf", sep = ".")
-file_png <- paste(opts$prefix, "heatmap.png", sep = ".")
-if (is.null(opts$group)) {
-  pheatmap(clean_data,
-           filename = file_pdf,
-           main = opts$title,
-           color = color,
-           scale = scale,
-           cluster_cols = opts$cluster_col,
-           cluster_rows = opts$cluster_row,
-           show_rownames = opts$show_rowname,
-           fontsize_row = fontsize_row,
-           border_color = border_color,
-           cellheight = cellheight)
+if (!is.null(opts$cwidth)) {
+  cellwidth <- opts$cwidth
 } else {
-  loginfo("Parse the group info %s", opts$group)
-  group_info <- read.table(file = opts$group,
-                           sep = '\t',
-                           row.names = 1,
-                           check.names = F)
-  colnames(group_info) <- c("Group")
-  annotation_col <- as.data.frame(group_info)
-  pheatmap(clean_data,
-           filename = file_pdf,
-           main = opts$title,
-           color = color,
-           scale = scale,
-           cluster_cols = F,
-           cluster_rows = opts$cluster_row,
-           show_rownames = opts$show_rowname,
-           fontsize_row = fontsize_row,
-           cellheight = cellheight,
-           border_color = border_color,
-           annotation_col = annotation_col)
+  cellwidth <- NA
 }
-loginfo("convert %s to %s", file_pdf, file_png)
-cmd <- paste("/Bio/usr/bin/convert", file_pdf, file_png, sep = " ")
+if (!is.null(opts$cheight)) {
+  cellheight <- opts$cheight
+}
+
+if (is.null(opts$group)) {
+  info_group <- NA
+} else {
+  info_group <- parser_info(opts$group)
+  colnames(info_group) <- c("Group")
+}
+
+if (is.null(opts$feature)) {
+  info_feature <- NA
+} else {
+  info_feature <- parser_info(opts$feature)
+  colnames(info_feature) <- c("Feature")
+}
+
+loginfo("Start to plot")
+f_pdf <- paste(opts$prefix, "heatmap.pdf", sep = ".")
+f_png <- paste(opts$prefix, "heatmap.png", sep = ".")
+
+plot_heatmap(
+  clean_data,
+  f_pdf,
+  opts$title,
+  color,
+  scale,
+  opts$cluster_col,
+  opts$cluster_row,
+  opts$show_rowname,
+  opts$show_colname,
+  fontsize_row,
+  border_color,
+  cellwidth,
+  cellheight,
+  annotation_col = info_group,
+  annotation_row = info_feature
+)
+
+loginfo("convert -density 300 %s to %s", f_pdf, f_png)
+cmd <- paste("convert -density 300", f_pdf, f_png, sep = " ")
 system(cmd)
