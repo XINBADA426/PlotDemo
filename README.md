@@ -149,7 +149,7 @@ python box_rectangle.py -i box_rectangle.data -r box_rectangle.pearson --xname G
 
 ### buble plot
 ![bubble.png](mix/bubble.png)
-```python
+```bash
 python bubble.py --up bubble_UP.tsv --down bubble_DOWN.tsv -p bubble
 ```
 [脚本路径](mix/bubble.py)
@@ -174,4 +174,11 @@ python gsea_multi_plot.py --edb gsea_multi_plot.edb --rnk gsea_multi_plot.rnk -t
 ![Tree plot](tree/PhyTree.png)
 ```shell
 PhyTree.R
+```
+
+### Venn
+两组或三组数据的venn图分析，圈的大小不同
+![Venn plot](venn/venn.png)
+```shell
+python venn.py -i venn.data -p venn
 ```
